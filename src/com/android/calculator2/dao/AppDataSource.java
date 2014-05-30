@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2014 The CyanogenMod Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.android.calculator2.dao;
 
 import java.util.ArrayList;
@@ -13,6 +29,7 @@ import com.xlythe.engine.theme.App;
 
 public abstract class AppDataSource implements DataSource {
     private static StoreHelper instance;
+
     // Database fields
     private SQLiteDatabase database;
     private StoreHelper dbHelper;
@@ -22,7 +39,9 @@ public abstract class AppDataSource implements DataSource {
     }
 
     public static synchronized StoreHelper getHelper(Context context) {
-        if(instance == null) instance = new StoreHelper(context);
+        if (instance == null) {
+            instance = new StoreHelper(context);
+        }
 
         return instance;
     }
@@ -36,7 +55,10 @@ public abstract class AppDataSource implements DataSource {
     }
 
     public String[] getColumns() {
-        String[] allColumns = { StoreHelper.COLUMN_ID, StoreHelper.COLUMN_NAME, StoreHelper.COLUMN_PACKAGE, StoreHelper.COLUMN_PRICE, StoreHelper.COLUMN_IMAGE_URL };
+        String[] allColumns = { StoreHelper.COLUMN_ID, StoreHelper.COLUMN_NAME,
+                StoreHelper.COLUMN_PACKAGE, StoreHelper.COLUMN_PRICE,
+                StoreHelper.COLUMN_IMAGE_URL };
+
         return allColumns;
     }
 
@@ -57,7 +79,7 @@ public abstract class AppDataSource implements DataSource {
     }
 
     public void createApps(List<App> apps) {
-        for(App a : apps) {
+        for (App a : apps) {
             createApp(a);
         }
     }
@@ -67,12 +89,15 @@ public abstract class AppDataSource implements DataSource {
         values.put(StoreHelper.COLUMN_NAME, app.getName());
         values.put(StoreHelper.COLUMN_PRICE, app.getPrice());
         values.put(StoreHelper.COLUMN_IMAGE_URL, app.getImageUrl());
-        database.update(getTableName(), values, String.format("%s = ?", StoreHelper.COLUMN_PACKAGE), new String[] { app.getPackageName() });
+        database.update(getTableName(), values,
+                String.format("%s = ?", StoreHelper.COLUMN_PACKAGE),
+                new String[] { app.getPackageName() });
     }
 
     public void deleteApp(App app) {
         System.out.println("App deleted with package: " + app.getPackageName());
-        database.delete(getTableName(), StoreHelper.COLUMN_PACKAGE + " = " + app.getPackageName(), null);
+        database.delete(getTableName(), StoreHelper.COLUMN_PACKAGE
+                + " = " + app.getPackageName(), null);
     }
 
     public void deleteApps() {
@@ -85,18 +110,18 @@ public abstract class AppDataSource implements DataSource {
         Cursor cursor = null;
         try {
             cursor = database.query(getTableName(), getColumns(), null, null, null, null, null);
-        }
-        catch(IllegalStateException e) {
+        } catch(IllegalStateException e) {
             e.printStackTrace();
             return apps;
         }
 
         cursor.moveToFirst();
-        while(!cursor.isAfterLast()) {
+        while (!cursor.isAfterLast()) {
             App app = cursorToApp(cursor);
             apps.add(app);
             cursor.moveToNext();
         }
+
         // Make sure to close the cursor
         cursor.close();
         return apps;

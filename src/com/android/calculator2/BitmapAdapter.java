@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2014 The CyanogenMod Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.android.calculator2;
 
 import java.io.Serializable;
@@ -32,7 +48,7 @@ public abstract class BitmapAdapter<T extends Serializable> extends ArrayAdapter
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
+        if (convertView == null) {
             convertView = inflateView();
         }
         updateView(convertView, getItem(position));
@@ -42,7 +58,7 @@ public abstract class BitmapAdapter<T extends Serializable> extends ArrayAdapter
 
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        if(convertView == null) {
+        if (convertView == null) {
             convertView = inflateDropdownView();
         }
         updateDropdownView(convertView, getItem(position));
@@ -55,27 +71,33 @@ public abstract class BitmapAdapter<T extends Serializable> extends ArrayAdapter
      */
     public void updateAdapter(List<T> data) {
         // Cache can be null
-        if(data == null) return;
+        if (data == null) {
+            return;
+        }
 
         List<T> adapterList = getList();
         adapterList.clear();
-        for(T t : data) {
+        for (T t : data) {
             adapterList.add(t);
         }
+
         notifyDataSetChanged();
     }
 
     /**
-     * A helper method for loading images from a URL. Pass the convertView because there is some handling in the background for canceling the call if the user is scrolling away.
+     * A helper method for loading images from a URL. Pass the convertView because there is some
+     * handling in the background for canceling the call if the user is scrolling away.
      */
     protected void grabImage(View convertView, ImageView iv, String url) {
         // Kill the previous async tasks
         BitmapTask previousTask = mAsyncTasks.get(convertView);
-        if(previousTask != null) {
+        if (previousTask != null) {
             previousTask.cancel(true);
         }
+
         BitmapTask newTask = new BitmapTask(iv, url);
         newTask.executeAsync();
+
         System.out.println("Execute has been called");
         mAsyncTasks.put(convertView, newTask);
     }
@@ -86,7 +108,9 @@ public abstract class BitmapAdapter<T extends Serializable> extends ArrayAdapter
     public abstract View inflateView();
 
     /**
-     * Passes the view from inflateView. There's a chance views like TextViews already have data, so make sure to clear everything you aren't updating. Also, avoid permanent UI changes like adding or removing views to convertView.
+     * Passes the view from inflateView. There's a chance views like TextViews already have data,
+     * so make sure to clear everything you aren't updating. Also, avoid permanent UI changes
+     * like adding or removing views to convertView.
      */
     public abstract void updateView(View convertView, T object);
 
@@ -98,7 +122,11 @@ public abstract class BitmapAdapter<T extends Serializable> extends ArrayAdapter
     }
 
     /**
-     * Passes the view from inflateDropdownView. There's a chance views like TextViews already have data, so make sure to clear everything you aren't updating. Also, avoid permanent UI changes like adding or removing views to convertView.
+     * Passes the view from inflateDropdownView. There's a chance views like TextViews already have
+     * data, so make sure to clear everything you aren't updating. Also, avoid permanent UI changes
+     * like adding or removing views to convertView.
      */
-    public void updateDropdownView(View convertView, T object) {}
+    public void updateDropdownView(View convertView, T object) {
+        // Do nothing here
+    }
 }

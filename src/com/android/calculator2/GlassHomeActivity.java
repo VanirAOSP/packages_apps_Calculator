@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2014 The CyanogenMod Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the 'License');
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an 'AS IS' BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.android.calculator2;
 
 import java.util.ArrayList;
@@ -40,10 +56,13 @@ public class GlassHomeActivity extends Activity {
                 displaySpeechRecognizer();
             }
         });
+
         mCardScrollView.activate();
         setContentView(mCardScrollView);
 
-        if(savedInstanceState == null) displaySpeechRecognizer();
+        if(savedInstanceState == null) {
+            displaySpeechRecognizer();
+        }
     }
 
     @Override
@@ -60,10 +79,13 @@ public class GlassHomeActivity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == SPEECH_REQUEST) {
-            if(resultCode == RESULT_OK) {
-                List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                String spokenText = results.get(0).toLowerCase(Locale.US).replace("point", ".").replace("minus", "-").replace("plus", "+").replace("divided by", "/").replace("times", "*").replace("x", "*").replace(" ", "");
+        if (requestCode == SPEECH_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                List<String> results = data.getStringArrayListExtra(
+                        RecognizerIntent.EXTRA_RESULTS);
+                String spokenText = results.get(0).toLowerCase(Locale.US).replace("point", ".")
+                        .replace("minus", "-").replace("plus", "+").replace("divided by", "/")
+                        .replace("times", "*").replace("x", "*").replace(" ", "");
                 spokenText = SpellContext.replaceAllWithNumbers(spokenText);
                 spokenText = spokenText.replaceAll("[a-z]", "");
 
@@ -75,19 +97,19 @@ public class GlassHomeActivity extends Activity {
                 String result;
                 try {
                     result = logic.evaluate(spokenText);
-                }
-                catch(SyntaxException e) {
+                } catch (SyntaxException e) {
                     result = getString(R.string.error);
                 }
+
                 Intent intent = new Intent(this, GlassResultActivity.class);
                 intent.putExtra(GlassResultActivity.EXTRA_RESULT, result);
                 startActivity(intent);
                 finish();
-            }
-            else {
+            } else {
                 detectionFailed();
             }
         }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -102,16 +124,6 @@ public class GlassHomeActivity extends Activity {
 
     private class ExampleCardScrollAdapter extends CardScrollAdapter {
         @Override
-        public int findIdPosition(Object id) {
-            return -1;
-        }
-
-        @Override
-        public int findItemPosition(Object item) {
-            return mCards.indexOf(item);
-        }
-
-        @Override
         public int getCount() {
             return mCards.size();
         }
@@ -123,7 +135,12 @@ public class GlassHomeActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return mCards.get(position).toView();
+            return mCards.get(position).getView();
+        }
+
+        @Override
+        public int getPosition(Object obj) {
+            return mCards.indexOf(obj);
         }
     }
 }

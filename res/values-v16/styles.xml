@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2007 The Android Open Source Project
+<!--
+     Copyright (C) 2014 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -15,17 +16,21 @@
 -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:theme="http://schemas.android.com/apk/res-auto">
-    <style name="Theme.Calculator.ButtonStyle.Widget" >
+
+    <style name="Theme.Calculator.ButtonStyle.Widget">
         <item name="android:background">@drawable/circle_bg</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
-    <style name="Theme.Calculator.ButtonStyle.FloatingCalc" >
+
+    <style name="Theme.Calculator.ButtonStyle.FloatingCalc">
         <item name="android:background">@drawable/circle_bg</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
+
     <style name="Theme.Calculator.Display.Widget">
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
+
     <style name="Theme.Calculator.Display.FloatingCalc" >
         <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:padding">0dp</item>

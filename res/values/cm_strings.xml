@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2012-2013 The CyanogenMod Project
+<!--
+     Copyright (C) 2012-2014 The CyanogenMod Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -16,30 +17,23 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
     <!-- App copyright -->
     <string name="application_copyright">Copyright \u00A9 2014 The CyanogenMod Project</string>
-    <!-- App version -->
-    <string name="application_version" translatable="false">v3.5.3</string>
 
     <!-- Displayed letters for the hex digit buttons -->
     <string name="A" translatable="false">A</string>
-    <!-- Displayed letters for the hex digit buttons -->
     <string name="B" translatable="false">B</string>
-    <!-- Displayed letters for the hex digit buttons -->
     <string name="C" translatable="false">C</string>
-    <!-- Displayed letters for the hex digit buttons -->
     <string name="D" translatable="false">D</string>
-    <!-- Displayed letters for the hex digit buttons -->
     <string name="E" translatable="false">E</string>
-    <!-- Displayed letters for the hex digit buttons -->
     <string name="F" translatable="false">F</string>
+
     <!-- Displayed letters for the variable digit buttons -->
     <string name="X">X</string>
-    <!-- Displayed letters for the variable digit buttons -->
     <string name="Y">Y</string>
 
-    <!-- Do not translate. Plus sign / unicode minus sign; don't translate. Displayed as button on screen. -->
-    <string name="sign" translatable="false">+/\u2212</string>
-    <!-- Do not translate. Coma; don't translate. Displayed as button on screen. -->
-    <string name="coma" translatable="false">,</string>
+    <!-- Plus sign / minus sign; Displayed as button on screen. -->
+    <string name="sign" translatable="false">\u002B/\u2212</string>
+    <!-- Do not translate. Coma; Displayed as button on screen. -->
+    <string name="coma" translatable="false">\u002C</string>
 
     <!-- Displayed on buttons on screen for the arcsin function. -->
     <string name="arcsin">asin</string>
@@ -51,7 +45,7 @@
     <!-- Displayed on buttons on screen for the value of i. -->
     <string name="i" translatable="false">i</string>
     <!-- Displayed on buttons on screen for the percent function. -->
-    <string name="percentage" translatable="false">%</string>
+    <string name="percentage" translatable="false">\u0025</string>
     <!-- (Hidden) Displayed on buttons on screen for the integral function. -->
     <string name="integral" translatable="false">\u222B</string>
     <!-- (Hidden) Displayed on buttons on screen for the integral function. -->
@@ -68,7 +62,7 @@
     <string name="cbrt">\u00b3\u221a</string>
 
     <!-- Displayed on buttons on screen for parentheses. -->
-    <string name="parentheses" translatable="false">( )</string>
+    <string name="parentheses" translatable="false">\u0028\u0020\u0029</string>
 
     <!-- Menu item text to take user to the screen with matrices. -->
     <string name="matrix">Matrix panel</string>
@@ -82,6 +76,8 @@
     <string name="lock">Lock page</string>
     <!-- Menu item text to unlock view pager. -->
     <string name="unlock">Unlock page</string>
+    <!-- Menu item text to explain themes. -->
+    <string name="info">Info</string>
 
     <string name="copy">Copy \'%s\'</string>
     <!-- Menu item for removing item from history -->
@@ -107,7 +103,7 @@
     <string name="minus_row">-Row</string>
     <string name="plus_col">+Col</string>
     <string name="minus_col">-Col</string>
-    <string name="matrix_new" translatable="false">[ ]</string>
+    <string name="matrix_new" translatable="false">\u005B\u0020\u005D</string>
     <string name="matrix_inverse" translatable="false">-1</string>
     <string name="matrix_transpose">T</string>
     <string name="next">Next</string>
@@ -134,9 +130,10 @@
     <string name="radians">RAD</string>
     <string name="degrees">DEG</string>
     <string name="theme">Theme</string>
-    <string name="showDetails">Show Details</string>
-    <string name="floatingCalc">Floating Calculator</string>
-    <string name="vibrateOnPress">Vibrate on Click</string>
+    <string name="showDetails">Show details</string>
+    <string name="floatingCalc">Floating calculator</string>
+    <string name="vibrateOnPress">Vibrate on click</string>
+    <string name="showWidgetBackground">Show widget background</string>
 
     <!-- Clings -->
     <string name="cling_simple_title">Welcome</string>
@@ -150,25 +147,29 @@
     <string name="cling_dismiss">OK</string>
 
     <!-- Separators for dec, bin, and hex. Must be 1 charater! -->
-    <string name="dec_separator">,</string>
+    <string name="dec_separator">\u002C</string>
     <string name="bin_separator">\u0020</string>
     <string name="hex_separator">\u0020</string>
     <item name="dec_separator_distance" type="integer">3</item>
     <item name="bin_separator_distance" type="integer">4</item>
     <item name="hex_separator_distance" type="integer">2</item>
 
-    <!-- Decimal point. Make sure Matrix separator is unique from decimal. Make sure dot is unique from the above separators. -->
+    <!-- Decimal point. Make sure Matrix separator is unique from decimal.
+         Make sure dot is unique from the above separators. -->
     <string name="dot">.</string>
     <string name="matrix_separator">,</string>
 
+    <!-- Store strings -->
     <string name="store_tab_themes">Themes</string>
     <string name="store_tab_extensions">Extensions</string>
     <string name="store_price_installed">Installed</string>
     <string name="store_price_free">Free</string>
+    <string name="store_info_text">Themes give you the ability to change the look and feel of Calculator. They are powerful, letting you adjust almost all fonts, images, and colors.\n\nAnyone is free to write their own theme and share it. A quick and dirty guide is posted here: http://xlythe.com/calculator/theme.html\n\nThemes can be submitted to the store through http://review.cyanogenmod.org</string>
 
+    <!-- Easter egg toast text -->
     <string name="easter_egg">Magikarp used Splash but nothing happened.</string>
 
-    <!-- Glass strings -->
+    <!-- Google Glass strings -->
     <string name="glass_start">Calculate</string>
     <string name="voice_detection_failed">Calculation failed. Try again?</string>
     <string name="voice_detection_repeat">Calculate again?</string>

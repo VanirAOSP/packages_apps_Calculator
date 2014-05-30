@@ -1,14 +1,14 @@
 /*
- * Copyright (C) 2010 The Android Open Source Project
+ * Copyright (C) 2014 The CyanogenMod Project
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
+ * Licensed under the Apache License, Version 2.0 (the 'License');
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
+ * distributed under the License is distributed on an 'AS IS' BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
@@ -51,10 +51,14 @@ public class MatrixEditText extends ThemedEditText implements OnFocusChangeListe
     public MatrixEditText(final AdvancedDisplay display, final MatrixView parent) {
         super(display.getContext());
         setCustomSelectionActionModeCallback(new NoTextSelectionMode());
-        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
         imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT);
-        int padding = getContext().getResources().getDimensionPixelSize(R.dimen.matrix_edit_text_padding);
+
+        int padding = getContext().getResources().getDimensionPixelSize(
+                R.dimen.matrix_edit_text_padding);
         setPadding(padding, 0, padding, 0);
+
         this.mParent = parent;
         this.mDisplay = display;
         setKeyListener(new MatrixKeyListener());
@@ -75,9 +79,9 @@ public class MatrixEditText extends ThemedEditText implements OnFocusChangeListe
 
     @Override
     public void onFocusChange(View v, boolean hasFocus) {
-        if(hasFocus) {
+        if (hasFocus) {
             mDisplay.mActiveEditText = MatrixEditText.this;
-            if(getText().toString().equals(Logic.NAN)) {
+            if (getText().toString().equals(Logic.NAN)) {
                 setText("");
             }
         }
@@ -91,11 +95,12 @@ public class MatrixEditText extends ThemedEditText implements OnFocusChangeListe
     @Override
     public View focusSearch(int direction) {
         switch(direction) {
-        case View.FOCUS_FORWARD:
-            return mParent.nextView(this);
-        case View.FOCUS_BACKWARD:
-            return mParent.previousView(this);
+            case View.FOCUS_FORWARD:
+                return mParent.nextView(this);
+            case View.FOCUS_BACKWARD:
+                return mParent.previousView(this);
         }
+
         return super.focusSearch(direction);
     }
 
@@ -115,15 +120,19 @@ public class MatrixEditText extends ThemedEditText implements OnFocusChangeListe
         }
 
         @Override
-        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest,
+                int dstart, int dend) {
             return null;
         }
 
         @Override
         public boolean onKeyDown(View view, Editable content, int keyCode, KeyEvent event) {
-            if(keyCode == KeyEvent.KEYCODE_DEL) {
-                if(mParent.isEmpty()) mDisplay.removeView(mParent);
+            if (keyCode == KeyEvent.KEYCODE_DEL) {
+                if (mParent.isEmpty()) {
+                    mDisplay.removeView(mParent);
+                }
             }
+
             return super.onKeyDown(view, content, keyCode, event);
         }
     }
@@ -136,12 +145,14 @@ public class MatrixEditText extends ThemedEditText implements OnFocusChangeListe
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            // Prevents the selection action mode on double tap.
+            // Prevents the selection action mode on double tap
             return false;
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode mode) {}
+        public void onDestroyActionMode(ActionMode mode) {
+            // Do nothing here
+        }
 
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {

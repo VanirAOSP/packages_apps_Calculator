@@ -1,11 +1,11 @@
 /*
- * Copyright (C) 2008 The Android Open Source Project
+ * Copyright (C) 2014 The CyanogenMod Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -34,7 +34,8 @@ class FloatingHistoryAdapter extends HistoryAdapter {
 
     @Override
     protected HistoryLine createView() {
-        HistoryLine v = (HistoryLine) View.inflate(getContext(), R.layout.floating_history_entry, null);
+        HistoryLine v = (HistoryLine) View.inflate(getContext(),
+                R.layout.floating_history_entry, null);
         return v;
     }
 
@@ -49,16 +50,20 @@ class FloatingHistoryAdapter extends HistoryAdapter {
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mListener != null) mListener.onHistoryItemClick(entry);
-                // copyContent(entry.getEdited());
+                if (mListener != null) {
+                    mListener.onHistoryItemClick(entry);
+                }
             }
         });
     }
 
     private void copyContent(String text) {
-        ClipboardManager clipboard = (ClipboardManager) getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipboardManager clipboard = (ClipboardManager) getContext()
+                .getSystemService(Context.CLIPBOARD_SERVICE);
         clipboard.setPrimaryClip(ClipData.newPlainText(null, text));
-        String toastText = String.format(getContext().getResources().getString(R.string.text_copied_toast), text);
+
+        String toastText = String.format(
+                getContext().getResources().getString(R.string.text_copied_toast), text);
         Toast.makeText(getContext(), toastText, Toast.LENGTH_SHORT).show();
     }
 

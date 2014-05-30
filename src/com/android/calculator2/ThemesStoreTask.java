@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2014 The CyanogenMod Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the 'License');
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an 'AS IS' BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.android.calculator2;
 
 import java.io.InputStream;
@@ -16,7 +32,8 @@ import com.google.gson.Gson;
 import com.xlythe.engine.theme.App;
 
 public class ThemesStoreTask extends AsyncTask<String, String, List<App>> {
-    private static final String THEME_URL = "http://xlythe.com/calculator/store/themes.json";
+    private static final String THEME_URL =
+            "https://raw.githubusercontent.com/CyanogenMod/android_packages_apps_Calculator/cm-11.0/themes.json";
 
     private final Context mContext;
 
@@ -31,24 +48,20 @@ public class ThemesStoreTask extends AsyncTask<String, String, List<App>> {
         String result = "[]";
         try {
             URL url = new URL(THEME_URL);
-
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
-
             InputStream in = urlConnection.getInputStream();
-
             InputStreamReader isr = new InputStreamReader(in);
-
             StringBuilder builder = new StringBuilder();
 
             int data = isr.read();
-            while(data != -1) {
+            while (data != -1) {
                 char current = (char) data;
                 data = isr.read();
                 builder.append(current);
             }
+
             result = builder.toString();
-        }
-        catch(Exception e) {
+        } catch(Exception e) {
             e.printStackTrace();
         }
 
@@ -59,13 +72,15 @@ public class ThemesStoreTask extends AsyncTask<String, String, List<App>> {
             apps = Arrays.asList(array);
 
             // Update database
-            ThemesDataSource dataSource = new ThemesDataSource(mContext);
-            dataSource.open();
-            dataSource.deleteApps();
-            dataSource.createApps(apps);
-        }
-        catch(Exception e) {
-            // May have returned a 500 DB may be closed or context may be null
+            if (apps.size() > 0) {
+                ThemesDataSource dataSource = new ThemesDataSource(mContext);
+                dataSource.open();
+                dataSource.deleteApps();
+                dataSource.createApps(apps);
+                dataSource.close();
+            }
+        } catch(Exception e) {
+            // May have returned a 500, DB may be closed, or context may be null
             e.printStackTrace();
             cancel(true);
         }
@@ -75,10 +90,9 @@ public class ThemesStoreTask extends AsyncTask<String, String, List<App>> {
 
     @SuppressLint("NewApi")
     public void executeAsync() {
-        if(android.os.Build.VERSION.SDK_INT < 11) {
+        if (android.os.Build.VERSION.SDK_INT < 11) {
             execute();
-        }
-        else {
+        } else {
             executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }

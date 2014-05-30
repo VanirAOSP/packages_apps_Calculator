@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2014 The CyanogenMod Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the 'License');
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an 'AS IS' BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.android.calculator2;
 
 import java.util.ArrayList;
@@ -31,7 +47,6 @@ public class GlassResultActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         mResult = getIntent().getStringExtra(EXTRA_RESULT);
-
         createCards();
 
         mCardScrollView = new CardScrollView(this);
@@ -45,6 +60,7 @@ public class GlassResultActivity extends Activity {
                 finish();
             }
         });
+
         setContentView(mCardScrollView);
     }
 
@@ -56,7 +72,7 @@ public class GlassResultActivity extends Activity {
         mTextToSpeech = new TextToSpeech(getBaseContext(), new OnInitListener() {
             @Override
             public void onInit(int status) {
-                if(status == TextToSpeech.SUCCESS) {
+                if (status == TextToSpeech.SUCCESS) {
                     mIsTextToSpeechInit = true;
                     speakResult();
                 }
@@ -67,22 +83,24 @@ public class GlassResultActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        if(mTextToSpeech != null) mTextToSpeech.shutdown();
+        if (mTextToSpeech != null) {
+            mTextToSpeech.shutdown();
+        }
     }
 
     private void speakResult() {
-        if(mTextToSpeech != null && mIsTextToSpeechInit) {
-            if(mResult.startsWith(String.valueOf(Logic.MINUS))) {
+        if (mTextToSpeech != null && mIsTextToSpeechInit) {
+            if (mResult.startsWith(String.valueOf(Logic.MINUS))) {
                 // Speech can't say "-1". It says "1" instead.
                 mResult = getString(R.string.speech_helper_negative, mResult.substring(1));
             }
+
             mTextToSpeech.speak(mResult, TextToSpeech.QUEUE_ADD, null);
         }
     }
 
     private void createCards() {
         mCards = new ArrayList<Card>();
-
         Card card;
 
         card = new Card(this);
@@ -92,16 +110,6 @@ public class GlassResultActivity extends Activity {
     }
 
     private class ExampleCardScrollAdapter extends CardScrollAdapter {
-        @Override
-        public int findIdPosition(Object id) {
-            return -1;
-        }
-
-        @Override
-        public int findItemPosition(Object item) {
-            return mCards.indexOf(item);
-        }
-
         @Override
         public int getCount() {
             return mCards.size();
@@ -114,7 +122,12 @@ public class GlassResultActivity extends Activity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            return mCards.get(position).toView();
+            return mCards.get(position).getView();
+        }
+
+        @Override
+        public int getPosition(Object obj) {
+            return mCards.indexOf(obj);
         }
     }
 }

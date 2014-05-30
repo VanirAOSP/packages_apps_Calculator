@@ -1,6 +1,6 @@
 -dontwarn org.ejml.ops.**
 
-#keep all resource identifiers
+# Keep all resource identifiers
 -keep class **.R$*
 -keepclassmembers class **.R$* {
     public static <fields>;
